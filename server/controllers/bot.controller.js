@@ -1,46 +1,23 @@
+const botbuilder = require('botbuilder');
 
 const userController = {};
 
+const adapter = new botbuilder.BotFrameworkAdapter({
+    appId: process.env.MicrosoftAppId,
+    appPassword: process.env.MicrosoftAppPassword
+});
 
-// /GET all users
 
-userController.getUsers = async (req, res) =>{
-    console.log("Hola Node");
-//    const users =  await user.find();
-//    res.json(users);
-} 
-// /GET only one user
-userController.getUser = async (req , res) =>{
-    // const getUs = await user.findById(req.params.id);
-    // res.json(getUs);
-}
-// /POST new user
-userController.createUser = async (req, res) => {
-    // const newUser = new user(req.body);
-    // await newUser.save();
-    // res.json({
-    //     status: "User saved"
-    // });
-}
-// /PUT update user
-userController.editUser = async (req, res) =>{
-    // const {id} = req.params;
-    // const oneUser = {
-    //     email: req.params.email,
-    //     password: req.params.password
-    // };
-    // await user.findByIdAndUpdate(id, {$set: oneUser}, {new:true} );
-    // res.json({
-    //     status: "User Updated"
-    // })
+// POST Messagge
+userController.sendMessage = (req, res) => {
+    adapter.processActivity(req, res, async (context) =>{
+        if (context.activity.type === "message"){
+            const res = context.activity.text;
+
+            await context.sendActivity(`Hola lo que escribiste fue ${ res }`)
+        }
+    })
 }
 
-// /DELETE user
-userController.deleteUser = async (req, res) =>{
-    // await user.findByIdAndRemove(req.params.id);
-    // res.json({
-    //     status: "User Deleted"
-    // })
-}
  
 module.exports = userController;

@@ -12,7 +12,7 @@ app.use(express.json())
 app.use(cors({origin: 'http://localhost:4200'}));
 
 //Routes
-app.use('/bot',require('./routes/main.routes'));
+app.use('/api',require('./routes/main.routes'));
 
 app.listen(3000, ()=> {
     console.log("Server On Port ", app.get('port'))
